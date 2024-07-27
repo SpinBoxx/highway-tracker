@@ -5,6 +5,7 @@ const Configuration: UserConfig = {
 	rules: {
 		"type-case": [2, "always", "upper-case"],
 		"subject-max-length": [2, "always", 150],
+		"header-max-length": [2, "always", 150],
 		"type-enum": [
 			2,
 			"always",
