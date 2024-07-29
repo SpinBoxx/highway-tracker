@@ -2,13 +2,17 @@
 
 import { ActionError, createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/lib/prisma";
-import { createAccountSchema } from "@/schemas/auth/create-account-schema";
+import {
+	createAccountSchema,
+	passwordMinLength,
+} from "@/schemas/auth/create-account-schema";
 import bcrypt from "bcrypt";
+import { loginAction } from "../login/login";
 
 export const createAccountAction = createSafeAction
 	.schema(createAccountSchema)
 	.action(async ({ parsedInput: { password, username } }) => {
-		if (password.length < 8) {
+		if (password.length < passwordMinLength) {
 			throw new ActionError(
 				"Votre mot de passe doit faire 10 caractères minimum.",
 			);
@@ -39,6 +43,7 @@ export const createAccountAction = createSafeAction
 		if (!newUser) {
 			throw new ActionError("Impossible de creer l'utiliateur");
 		}
+
 		return {
 			data: newUser,
 			successMessage: "Creer",
