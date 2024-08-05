@@ -61,7 +61,7 @@ enum TravelType {
 }
 
 enum CarType {
+  OIL
   DIESEL
   ETHANOL
-  OIL
 }

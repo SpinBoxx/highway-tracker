@@ -19,7 +19,7 @@ interface Props {
 export function CarTypeSelect({ onValueChange, value }: Props) {
 	return (
 		<Select onValueChange={onValueChange} defaultValue={CarType.OIL}>
-			<SelectTrigger className="w-[180px]">
+			<SelectTrigger className="w-full">
 				<SelectValue placeholder="Votre type de voiture" />
 			</SelectTrigger>
 			<SelectContent>

@@ -46,7 +46,7 @@ export const getFuelPrice = createSafeAction
 	.schema(getFuelPriceSchema)
 	.action(async ({ parsedInput: { fuel } }) => {
 		const response = await fetch(
-			"http://api.prix-carburants.2aaz.fr/station/44000009",
+			"http://api.prix-carburants.2aaz.fr/station/44272001",
 			{
 				headers: {
 					accept: "application/json",
@@ -60,5 +60,22 @@ export const getFuelPrice = createSafeAction
 
 		const data: ApiResponse = await response.json();
 
-		return data.Fuels.at(0)?.Price;
+		const currentFuel = data.Fuels.find(
+			(_fuel) =>
+				_fuel.short_name.toLowerCase() ===
+				translateFuelsForApi(fuel).toLowerCase(),
+		);
+
+		return currentFuel?.Price;
 	});
+
+const translateFuelsForApi = (fuel: CarType) => {
+	switch (fuel) {
+		case "DIESEL":
+			return "Gazole";
+		case "ETHANOL":
+			return "E85";
+		case "OIL":
+			return "SP95";
+	}
+};

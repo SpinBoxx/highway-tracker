@@ -17,6 +17,7 @@ import { addOrUpdateTravelSchema } from "@/schemas/travel/add-or-update-travel-s
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CarType } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
@@ -26,17 +27,26 @@ import { CarTypeSelect } from "../selects/car-type-select";
 const AddOrUpdateTravelForm = () => {
 	const form = useForm<z.infer<typeof addOrUpdateTravelSchema>>({
 		resolver: zodResolver(addOrUpdateTravelSchema),
-		defaultValues: {},
+		defaultValues: {
+			carType: CarType.OIL,
+		},
 	});
+	const [fuelPrice, setFuelPrice] = useState<number | null>(null);
+	const { watch } = form;
+	watch("carType");
 
 	const getFuelPriceQuery = useQuery({
-		queryKey: [queryKeys.fuelsPrice],
+		queryKey: [queryKeys.fuelsPrice, form.getValues("carType")],
 		queryFn: async () => {
-			const response = await getFuelPrice({ fuel: CarType.ETHANOL });
-			console.log(response);
+			const response = await getFuelPrice({ fuel: form.getValues("carType") });
+
 			if (response?.serverError) {
 				toast.error(response.serverError);
 			}
+			if (response?.data?.value) {
+				setFuelPrice(response.data.value);
+			}
+
 			return response?.data;
 		},
 	});
@@ -53,7 +63,7 @@ const AddOrUpdateTravelForm = () => {
 						name="name"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Nom du trajet</FormLabel>
+								<FormLabel>Nom du trajet </FormLabel>
 								<FormControl>
 									<Input placeholder="Criterium fédéral #3" {...field} />
 								</FormControl>
@@ -115,23 +125,35 @@ const AddOrUpdateTravelForm = () => {
 							</FormItem>
 						)}
 					/>
-					<FormField
-						control={form.control}
-						name="carType"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Type de voiture</FormLabel>
-								<FormControl>
-									<CarTypeSelect
-										onValueChange={field.onChange}
-										value={field.value}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<Button type="submit">Submit {getFuelPriceQuery.data?.value}</Button>
+					<div className="grid grid-cols-3 gap-8">
+						<FormField
+							control={form.control}
+							name="carType"
+							render={({ field }) => (
+								<FormItem className="col-span-2 w-full">
+									<FormLabel>Type de voiture</FormLabel>
+									<FormControl>
+										<CarTypeSelect
+											onValueChange={field.onChange}
+											value={field.value}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<Input
+							disabled
+							value={
+								getFuelPriceQuery.data
+									? `${getFuelPriceQuery.data.value} €/L`
+									: "Chargement"
+							}
+							className="self-end bg-gray-200"
+						/>
+					</div>
+
+					<Button type="submit">Submit </Button>
 				</form>
 			</Form>
 		</div>
