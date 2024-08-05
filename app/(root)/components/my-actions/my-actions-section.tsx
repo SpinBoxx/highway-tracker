@@ -1,8 +1,12 @@
+"use client";
+
 import { FileUp, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import CustomSeparator from "../custom-separator";
 import CardAction from "./card-action";
 
 const MyActionsSection = () => {
+	const router = useRouter();
 	return (
 		<div>
 			<CardAction
@@ -10,7 +14,7 @@ const MyActionsSection = () => {
 				className="px-4"
 				actionTitle="Créer un trajet"
 				actionDescription="lorem ipsuesfsfsef fsef jfk sf"
-				onClick={() => {}}
+				onClick={() => router.push("/ajouter-un-trajet")}
 			/>
 			<CustomSeparator className="h-1.5" />
 			<CardAction

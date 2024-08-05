@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { loginAction } from "@/actions/auth/login/login";
 import { createAccountAction } from "@/actions/auth/register/create-account";
+import LoaderDotSpinner from "@/components/loaders/loader-dot-spinner";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -27,7 +28,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import type { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
@@ -41,23 +42,25 @@ export function LoginModal({ setIsLogin }: Props) {
 		resolver: zodResolver(createAccountSchema),
 	});
 
+	const [isLoginLoading, setIsLoginLoading] = useState(false);
+
 	const router = useRouter();
 
 	const { execute, result } = useAction(loginAction, {
 		onSuccess: (response) => {
 			if (response.data?.successMessage) {
 				toast.success(response.data.successMessage);
-
 				router.push("/");
 			}
 		},
 		onError: (error) => {
 			toast.error(error.error.serverError);
+			setIsLoginLoading(false);
 		},
 	});
 
 	function onSubmit(values: z.infer<typeof createAccountSchema>) {
-		console.log(values);
+		setIsLoginLoading(true);
 		execute(values);
 	}
 
@@ -110,7 +113,13 @@ export function LoginModal({ setIsLogin }: Props) {
 							)}
 						/>
 						<Button type="submit" className="!mt-6 w-full rounded-lg">
-							Se connecter
+							{isLoginLoading ? (
+								<div className="flex items-center gap-2">
+									<LoaderDotSpinner /> Connexion en cours
+								</div>
+							) : (
+								"Se connecter"
+							)}
 						</Button>
 					</form>
 				</Form>

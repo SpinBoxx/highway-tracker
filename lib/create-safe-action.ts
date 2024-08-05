@@ -11,6 +11,8 @@ export const createSafeAction = createSafeActionClient({
 		// In this case, we can use the 'MyCustomError` class to unmask errors
 		// and return them with their actual messages to the client.
 		if (e instanceof ActionError) {
+			console.log({ e });
+
 			return e.message;
 		}
 

@@ -8,7 +8,6 @@ export default async function Home() {
 	const session = await getSession();
 	return (
 		<div className="">
-			<CustomSeparator className="h-3" />
 			<div className="px-4">
 				<MyTripsSection />
 			</div>

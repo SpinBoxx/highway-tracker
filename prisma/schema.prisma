@@ -18,4 +18,50 @@ model User {
 
   createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
+
+  travels Travel[]
+}
+
+
+model Travel {
+  id Int @id @default(autoincrement())
+
+  name String
+  type TravelType
+  startDate DateTime
+  endDate DateTime
+  startingAddress String
+  destinationAddress String
+  tollPrice Int
+  carType CarType
+  createdAt DateTime @default(now())
+  updated DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+  userId String 
+  tollTickets TollTicket[]
+}
+
+model TollTicket {
+
+  id Int @id @default(autoincrement())
+
+  photo String
+  createdAt DateTime @default(now())
+  updated DateTime @updatedAt
+
+  travel Travel @relation(fields: [travelId], references: [id])
+  travelId Int
+}
+
+enum TravelType {
+  CRITERIUM
+  CHAMPIONSHIP
+  TOURNAMENT
+}
+
+enum CarType {
+  DIESEL
+  ETHANOL
+  OIL
 }

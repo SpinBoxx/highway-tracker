@@ -19,7 +19,8 @@ const CardAction = ({
 	...props
 }: Props & HTMLAttributes<HTMLDivElement>) => {
 	return (
-		<div className={cn("flex items-center gap-3", className)}>
+		// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+		<div onClick={onClick} className={cn("flex items-center gap-3", className)}>
 			<Button size="icon">
 				<Icon className="size-5" />
 			</Button>

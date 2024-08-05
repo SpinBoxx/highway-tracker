@@ -6,9 +6,7 @@ export const Logo = ({
 	...props
 }: HTMLAttributes<HTMLDivElement>) => {
 	return (
-		<div
-			className={cn("flex items-center gap-2 text-blue-500 text-xl", className)}
-		>
+		<div className={cn("flex items-center gap-2 text-xl", className)}>
 			<span className="text-3xl">◪</span>
 			<p className="font-medium">Heca</p>
 		</div>
