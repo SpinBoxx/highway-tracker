@@ -43,12 +43,16 @@ export const addOrUpdateTravelAction = createAuthAction
 			tollPrice = tollPrice * 2;
 		}
 
+		// biome-ignore lint/style/useConst: <explanation>
 		let travel: Travel;
+		console.log("FEFEf");
 
 		const { id, tollTickets, ...body } = parsedInput;
 		travel = await db.travel.create({
 			data: { ...body, userId: user.id },
 		});
+
+		console.log({ travel });
 
 		return travel;
 	});

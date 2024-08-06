@@ -18,10 +18,7 @@ interface Props {
 
 export function CompetitionSelect({ onValueChange, value }: Props) {
 	return (
-		<Select
-			onValueChange={onValueChange}
-			defaultValue={Competition.CHAMPIONSHIP}
-		>
+		<Select onValueChange={onValueChange} value={value}>
 			<SelectTrigger className="w-full">
 				<SelectValue placeholder="Compétition" />
 			</SelectTrigger>

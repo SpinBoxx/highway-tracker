@@ -39,7 +39,7 @@ const AddOrUpdateTravelForm = () => {
 		defaultValues: {
 			carFuel: CarFuel.OIL,
 			tollTickets: [],
-			competition: Competition.CRITERIUM,
+			competition: Competition.CHAMPIONSHIP,
 		},
 	});
 	const [fuelPrice, setFuelPrice] = useState<number | null>(null);
@@ -94,8 +94,16 @@ const AddOrUpdateTravelForm = () => {
 
 	const { execute } = useAction(addOrUpdateTravelAction, {
 		onSuccess: (response) => {
+			console.log(response);
 			if (response.data) {
 				toast.success("Le travel a bien été ajouté !");
+			}
+		},
+		onError: (response) => {
+			console.log(response);
+
+			if (response.error) {
+				toast.error(response.error.serverError);
 			}
 		},
 	});

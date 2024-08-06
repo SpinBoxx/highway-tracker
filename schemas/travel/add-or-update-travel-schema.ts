@@ -30,14 +30,16 @@ export const addOrUpdateTravelSchema = z.object({
 			constants.frenchAddressRegex,
 			"Veuillez respecter le format: <rue> <code postal> <ville>",
 		),
-	tollPrice: z.coerce.number({
-		message: "Entrez le total pour le(s) péage(s).",
-	}),
-	// .refine((val) => {
-	// 	console.log({ val });
-
-	// 	return val === 0 ? 0 : val;
-	// }),
+	tollPrice: z
+		.union([
+			z.number().optional(),
+			z.string().refine((val) => val === "", {
+				message: "La valeur doit être un nombre ou une chaîne vide",
+			}),
+		])
+		.transform((val) => {
+			return val === "" || val === undefined ? 0 : Number(val);
+		}),
 	carFuel: z.nativeEnum(CarFuel),
 	tollTickets: z.array(
 		z.object({
