@@ -4,7 +4,7 @@ import Navbar from "./components/navbar";
 
 const RootLayout = (props: PropsWithChildren) => {
 	return (
-		<div className=" pt-5">
+		<div className="py-5">
 			<ReactQueryProvider>
 				<>
 					<Navbar /> {props.children}

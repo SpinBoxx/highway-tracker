@@ -27,13 +27,14 @@ model Travel {
   id Int @id @default(autoincrement())
 
   name String
-  type TravelType
+  competition Competition
   startDate DateTime
-  endDate DateTime
+  endDate DateTime?
+  isReturnTrip Boolean
   startingAddress String
   destinationAddress String
   tollPrice Int
-  carType CarType
+  carFuel CarFuel
   createdAt DateTime @default(now())
   updated DateTime @updatedAt
 
@@ -54,13 +55,13 @@ model TollTicket {
   travelId Int
 }
 
-enum TravelType {
+enum Competition {
   CRITERIUM
   CHAMPIONSHIP
   TOURNAMENT
 }
 
-enum CarType {
+enum CarFuel {
   OIL
   DIESEL
   ETHANOL

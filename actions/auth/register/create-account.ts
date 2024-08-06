@@ -1,15 +1,14 @@
 "use server";
 
-import { ActionError, createSafeAction } from "@/lib/create-safe-action";
+import { ActionError, createAction } from "@/lib/create-safe-action";
 import { db } from "@/lib/prisma";
 import {
 	createAccountSchema,
 	passwordMinLength,
 } from "@/schemas/auth/create-account-schema";
 import bcrypt from "bcrypt";
-import { loginAction } from "../login/login";
 
-export const createAccountAction = createSafeAction
+export const createAccountAction = createAction
 	.schema(createAccountSchema)
 	.action(async ({ parsedInput: { password, username } }) => {
 		if (password.length < passwordMinLength) {

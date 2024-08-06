@@ -1,8 +1,8 @@
 "use server";
 
-import { ActionError, createSafeAction } from "@/lib/create-safe-action";
+import { ActionError, createAction } from "@/lib/create-safe-action";
 import { getFuelPriceSchema } from "@/schemas/fuel/get-fuel-price-schema";
-import type { CarType } from "@prisma/client";
+import type { CarFuel } from "@prisma/client";
 
 type ApiResponse = {
 	id: number;
@@ -42,7 +42,7 @@ type ApiResponse = {
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-export const getFuelPrice = createSafeAction
+export const getFuelPrice = createAction
 	.schema(getFuelPriceSchema)
 	.action(async ({ parsedInput: { fuel } }) => {
 		const response = await fetch(
@@ -69,7 +69,7 @@ export const getFuelPrice = createSafeAction
 		return currentFuel?.Price;
 	});
 
-const translateFuelsForApi = (fuel: CarType) => {
+const translateFuelsForApi = (fuel: CarFuel) => {
 	switch (fuel) {
 		case "DIESEL":
 			return "Gazole";

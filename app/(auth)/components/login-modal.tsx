@@ -114,9 +114,7 @@ export function LoginModal({ setIsLogin }: Props) {
 						/>
 						<Button type="submit" className="!mt-6 w-full rounded-lg">
 							{isLoginLoading ? (
-								<div className="flex items-center gap-2">
-									<LoaderDotSpinner /> Connexion en cours
-								</div>
+								<LoaderDotSpinner text="Connexion en cours" />
 							) : (
 								"Se connecter"
 							)}

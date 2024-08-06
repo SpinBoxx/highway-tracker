@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 
-export default function LoaderDotSpinner() {
+interface Props {
+	text: string;
+}
+
+export default function LoaderDotSpinner({ text }: Props) {
 	useEffect(() => {
 		async function getLoader() {
 			const { dotSpinner } = await import("ldrs");
@@ -8,5 +12,10 @@ export default function LoaderDotSpinner() {
 		}
 		getLoader();
 	}, []);
-	return <l-dot-spinner color="white" size="20" />;
+	return (
+		<div className="flex items-center gap-2">
+			<l-dot-spinner color="white" size="20" />
+			{text}
+		</div>
+	);
 }

@@ -5,7 +5,7 @@ import {
 
 export class ActionError extends Error {}
 
-export const createSafeAction = createSafeActionClient({
+export const createAction = createSafeActionClient({
 	// Can also be an async function.
 	handleReturnedServerError(e) {
 		// In this case, we can use the 'MyCustomError` class to unmask errors

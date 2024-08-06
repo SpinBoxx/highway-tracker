@@ -1,6 +1,6 @@
 "use server";
 
-import { ActionError, createSafeAction } from "@/lib/create-safe-action";
+import { ActionError, createAction } from "@/lib/create-safe-action";
 import { db } from "@/lib/prisma";
 import { loginSchema } from "@/schemas/auth/login-schema";
 import bcrypt from "bcrypt";
@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export const loginAction = createSafeAction
+export const loginAction = createAction
 	.schema(loginSchema)
 	.action(async ({ parsedInput: { password, username } }) => {
 		const user = await db.user.findFirst({

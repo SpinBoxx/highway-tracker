@@ -1,6 +1,6 @@
-import { CarType } from "@prisma/client";
+import { CarFuel } from "@prisma/client";
 import { z } from "zod";
 
 export const getFuelPriceSchema = z.object({
-	fuel: z.nativeEnum(CarType),
+	fuel: z.nativeEnum(CarFuel),
 });
