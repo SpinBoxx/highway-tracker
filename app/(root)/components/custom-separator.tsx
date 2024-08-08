@@ -18,7 +18,7 @@ const CustomSeparator = ({
 	) : (
 		<div
 			className={cn(
-				"my-3 h-3 w-full border-gray-400/70 border-y bg-gray-200",
+				"my-3 h-3 w-full border-gray-400/60 border-y bg-gray-200",
 				className,
 			)}
 		/>

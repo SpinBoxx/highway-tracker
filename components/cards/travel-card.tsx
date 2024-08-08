@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { getDateInFrench } from "@/services/date";
 import type { Competition, Travel } from "@prisma/client";
-import { Crown, Trophy, Users } from "lucide-react";
+import { Calendar, Crown, Trophy, Users } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader } from "../ui/card";
 
@@ -9,7 +9,7 @@ interface Props {
 	travel: Travel;
 }
 
-const TravelCard = ({ travel }: Props) => {
+export const TravelCard = ({ travel }: Props) => {
 	return (
 		<Card
 			className={cn(
@@ -25,7 +25,10 @@ const TravelCard = ({ travel }: Props) => {
 					<p className="font-medium">{travel.name}</p>
 				</div>
 				<div className="mt-auto">
-					<span className="text-sm">{getDateInFrench(travel.startDate)}</span>
+					<span className="flex items-center text-muted-foreground text-sm">
+						<Calendar className="mr-2 size-4 flex-none" />{" "}
+						{getDateInFrench(travel.startDate)}
+					</span>
 				</div>
 			</CardContent>
 		</Card>
@@ -71,20 +74,24 @@ const competitionColors = ({ competition }: CompetitionLogoProps) => {
 	switch (competition) {
 		case "CRITERIUM":
 			return {
-				bg: "bg-gradient-to-b from-purple-300/80 via-purple-100 to-white",
+				bg: "bg-gradient-to-br from-purple-300/80 via-purple-100/50 to-white",
 				color: "bg-purple-500",
 			};
 		case "CHAMPIONSHIP":
 			return {
-				bg: "bg-gradient-to-b from-blue-300/80 via-blue-100 to-white",
+				bg: "bg-gradient-to-br from-blue-300/80 via-blue-100/50 to-white",
 				color: "bg-primary",
 			};
 		case "TOURNAMENT":
 			return {
-				bg: "bg-gradient-to-b from-green-300/30 via-green-100/40 to-white",
+				bg: "bg-gradient-to-br from-green-300/80 via-green-100/50 to-white",
 				color: "bg-green-500",
 			};
 	}
 };
 
-export default TravelCard;
+export const TravelCardSkeleton = () => {
+	return (
+		<div className="h-[166px] w-52 animate-pulse rounded-md bg-gray-200 shadow-lg" />
+	);
+};

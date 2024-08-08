@@ -21,11 +21,12 @@ const CardAction = ({
 	return (
 		// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
 		<div onClick={onClick} className={cn("flex items-center gap-3", className)}>
-			<Button size="icon">
+			<Button size="icon" className="mt-1 flex-none self-start">
+				{" "}
 				<Icon className="size-5" />
 			</Button>
 			<div className="flex flex-col">
-				<p className="font-medium">{actionTitle}</p>
+				<p className="font-medium text-primary">{actionTitle}</p>
 				<p className="text-muted-foreground text-sm">{actionDescription}</p>
 			</div>
 			<ChevronRight className="ml-auto size-7 text-muted-foreground" />

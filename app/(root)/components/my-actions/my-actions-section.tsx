@@ -13,7 +13,7 @@ const MyActionsSection = () => {
 				Icon={Plus}
 				className="px-4"
 				actionTitle="Créer un trajet"
-				actionDescription="lorem ipsuesfsfsef fsef jfk sf"
+				actionDescription="Cliquez ici pour ajouter un trajet compétitif"
 				onClick={() => router.push("/ajouter-un-trajet")}
 			/>
 			<CustomSeparator className="h-1.5" />
@@ -21,7 +21,7 @@ const MyActionsSection = () => {
 				Icon={FileUp}
 				className="px-4"
 				actionTitle="Exporter mes trajets"
-				actionDescription="lorem ipsuesfsfsef fsef jfk sf"
+				actionDescription="Exporter les trajets au format pdf pour l'envoyer directement !"
 				onClick={() => {}}
 			/>
 			<CustomSeparator className="h-1.5" />
