@@ -8,6 +8,7 @@
 		"start": "next start",
 		"lint": "next lint",
 		"prepare": "husky",
+		"postinstall": "npx prisma generate",
 		"prisma:push": "dotenv -e .env.local -- npx prisma db push",
 		"prisma:studio": "dotenv -e .env.local -- npx prisma studio"
 	},
