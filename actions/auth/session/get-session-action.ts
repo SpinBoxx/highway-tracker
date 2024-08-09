@@ -3,6 +3,7 @@
 import type jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
+import { db } from "@/lib/prisma";
 import * as jose from "jose";
 import type { CustomJwtPayload } from "jsonwebtoken";
 
@@ -36,7 +37,17 @@ export const getSession = async () => {
 	); // details to  encode in the token
 
 	if (!decoded.payload) {
-		throw new Error("Failed to sign token");
+		return null;
+	}
+
+	const user = await db.user.findFirst({
+		where: {
+			id: decoded.payload.user.id,
+		},
+	});
+
+	if (!user) {
+		return null;
 	}
 	console.log(decoded.payload);
 
