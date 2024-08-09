@@ -25,7 +25,7 @@ export const addOrUpdateTravelAction = createAuthAction
 			isReturnTrip,
 		});
 
-		if (distance?.serverError) {
+		if (!distance?.data) {
 			throw new ActionError(
 				"Impossible de calculer la distance entre les 2 adresses !",
 			);
@@ -49,7 +49,11 @@ export const addOrUpdateTravelAction = createAuthAction
 
 		const { id, tollTickets, ...body } = parsedInput;
 		travel = await db.travel.create({
-			data: { ...body, userId: user.id },
+			data: {
+				...body,
+				userId: user.id,
+				distance: distance.data.distanceText,
+			},
 		});
 
 		console.log({ travel });

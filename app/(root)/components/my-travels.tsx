@@ -2,9 +2,12 @@
 
 import { getAllTravelsAction } from "@/actions/travel/get-all-travels";
 import { TravelCard, TravelCardSkeleton } from "@/components/cards/travel-card";
+import { Button } from "@/components/ui/button";
 import { queryKeys } from "@/constants/query-key";
+import { routes } from "@/constants/routes";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, CircleX } from "lucide-react";
+import Link from "next/link";
 import ScrollContainer from "react-indiana-drag-scroll";
 
 const MyTravelsSection = () => {
@@ -28,19 +31,35 @@ const MyTravelsSection = () => {
 				</span>
 			</div>
 
-			<ScrollContainer className="flex gap-3 overflow-x-scroll py-4">
-				{travelsQuery.data ? (
-					travelsQuery.data.map((travel) => (
-						<TravelCard key={travel.id} travel={travel} />
-					))
-				) : (
+			{travelsQuery.data?.length === 0 ? (
+				<div className="mt-6 space-y-4 font-medium">
 					<div className="flex gap-3">
-						{[...Array(3)].map((val) => (
-							<TravelCardSkeleton key={val} />
-						))}
+						{/* <CircleX className="mt-1 size-9 flex-none text-red-500" /> */}
+						<p className="text-balance text-2xl text-bold">
+							Vous n'avez encore aucun trajet d'ajouté sur Heca {":("}
+						</p>
 					</div>
-				)}
-			</ScrollContainer>
+					<Button className="bg-secondary">
+						<Link href={routes.addTravel}>
+							Commencez à le créer maintenant !
+						</Link>
+					</Button>
+				</div>
+			) : (
+				<ScrollContainer className="flex gap-3 overflow-x-scroll py-4">
+					{travelsQuery.data ? (
+						travelsQuery.data.map((travel) => (
+							<TravelCard key={travel.id} travel={travel} />
+						))
+					) : (
+						<div className="flex gap-3">
+							{[...Array(3)].map((val) => (
+								<TravelCardSkeleton key={val} />
+							))}
+						</div>
+					)}
+				</ScrollContainer>
+			)}
 		</div>
 	);
 };

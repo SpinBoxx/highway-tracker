@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { getDateInFrench } from "@/services/date";
 import type { Competition, Travel } from "@prisma/client";
-import { Calendar, Crown, Trophy, Users } from "lucide-react";
+import { Calendar, Crown, Navigation, Trophy, Users } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader } from "../ui/card";
 
@@ -24,10 +24,13 @@ export const TravelCard = ({ travel }: Props) => {
 				<div className="line-clamp-2 flex h-12 gap-2">
 					<p className="font-medium">{travel.name}</p>
 				</div>
-				<div className="mt-auto">
-					<span className="flex items-center text-muted-foreground text-sm">
+				<div className="mt-auto flex gap-3">
+					<span className="center text-muted-foreground text-xs">
 						<Calendar className="mr-2 size-4 flex-none" />{" "}
 						{getDateInFrench(travel.startDate)}
+					</span>
+					<span className="center text-muted-foreground text-xs">
+						<Navigation className="mr-2 size-4 flex-none" /> {travel.distance}
 					</span>
 				</div>
 			</CardContent>

@@ -33,6 +33,7 @@ model Travel {
   isReturnTrip Boolean
   startingAddress String
   destinationAddress String
+  distance String
   tollPrice Int
   carFuel CarFuel
   createdAt DateTime @default(now())
