@@ -3,6 +3,7 @@
 import type jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
+import { getUserAction } from "@/actions/user/get-user";
 import { db } from "@/lib/prisma";
 import * as jose from "jose";
 import type { CustomJwtPayload } from "jsonwebtoken";
@@ -40,13 +41,11 @@ export const getSession = async () => {
 		return null;
 	}
 
-	const user = await db.user.findFirst({
-		where: {
-			id: decoded.payload.user.id,
-		},
+	const user = await getUserAction({
+		userId: decoded.payload.user.id,
 	});
 
-	if (!user) {
+	if (!user?.data) {
 		return null;
 	}
 	console.log(decoded.payload);
